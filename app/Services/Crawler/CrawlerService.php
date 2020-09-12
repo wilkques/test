@@ -7,13 +7,14 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlerService
 {
+    /** @var static */
     protected $service;
 
     /**
-     * Undocumented function
+     * set url
      *
      * @param string $url
-     * @return void
+     * @return $this
      */
     public function url(string $url = '')
     {
