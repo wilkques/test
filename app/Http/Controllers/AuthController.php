@@ -23,7 +23,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->logout();
+        auth('jwt')->logout();
 
         return response()->json('success', 200);
     }
