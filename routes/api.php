@@ -27,5 +27,3 @@ Route::group(['middleware' => ['auth.api']], function() {
         Route::apiResource('register', 'RegisterController');
     });
 });
-
-Route::apiResource('/', 'TestController');
