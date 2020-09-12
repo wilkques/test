@@ -16,9 +16,9 @@ class AuthController extends Controller
             ], 403);
         }
 
-        return response()->json([], 200, [
+        return response()->json([
             'token' => "Bearer $token"
-        ]);
+        ], 200);
     }
 
     public function logout()
