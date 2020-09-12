@@ -25,6 +25,6 @@ class AuthController extends Controller
     {
         auth('jwt')->logout();
 
-        return response()->json('success', 200);
+        return response()->json(['message' => 'success'], 200);
     }
 }
