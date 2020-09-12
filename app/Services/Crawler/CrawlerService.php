@@ -7,9 +7,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlerService
 {
-    protected static $method = ['url'];
-
-    protected $url;
+    protected $service;
 
     /**
      * Undocumented function
@@ -17,7 +15,7 @@ class CrawlerService
      * @param string $url
      * @return void
      */
-    public function setUrl(string $url = '')
+    public function url(string $url = '')
     {
         $this->url = $url;
 
@@ -27,7 +25,7 @@ class CrawlerService
     /**
      * @return Illuminate\Http\Client\Response
      */
-    public function httpGet()
+    public function getResponse()
     {
         return Http::get($this->url);
     }
@@ -37,7 +35,7 @@ class CrawlerService
      */
     public function getDom()
     {
-        return $this->httpGet()->body();
+        return $this->getResponse()->body();
     }
 
     /**
@@ -48,12 +46,46 @@ class CrawlerService
         return new Crawler($this->getDom());
     }
 
+    /**
+     * set Crawler Service
+     *
+     * @param static $service
+     * @return $this
+     */
+    public function setService($service)
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * get Crawler Service
+     *
+     * @return static
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * execute
+     *
+     * @return static
+     */
+    public function execute()
+    {
+        return $this->getService()->exec();
+    }
+
+    public function __call($method, $arguments)
+    {
+        return $this->getService()->$method(...$arguments);
+    }
+
     public static function __callStatic($method, $arguments)
     {
-        if (in_array($method, ['url'])) {
-            $method = sprintf("set%s", ucfirst($method));
-        }
-
         return (new static)->$method(...$arguments);
     }
 }
