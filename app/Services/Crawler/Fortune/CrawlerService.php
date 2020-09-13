@@ -11,6 +11,9 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlerService implements CrawlerInterFace
 {
+    /** @var string */
+    const baseUrl = "https://astro.click108.com.tw/daily.php?iAcDay=%s&iAstro=%s";
+
     /** @var array */
     protected static $astro = [
         '牡羊座', '金牛座', '雙子座', '巨蟹座', '獅子座', '處女座', '天秤座', '天蠍座', '射手座', '摩羯座', '水瓶座', '雙魚座'
@@ -21,14 +24,12 @@ class CrawlerService implements CrawlerInterFace
         collect(self::$astro)->map(function ($item, $index) {
             $executeDay = Carbon::now()->format("Y-m-d");
 
-            $url = $this->getUrl($executeDay, $index);
-
             $data = [
                 'astro' => $item,
                 'execute_day' => $executeDay
             ];
 
-            $data += $this->getFortuneData($url);
+            $data += $this->getFortuneData($this->getUrl($executeDay, $index));
 
             Fortune::create($data);
         });
@@ -41,11 +42,7 @@ class CrawlerService implements CrawlerInterFace
      */
     protected function getUrl(string $executeDay, int $index): string
     {
-        return sprintf(
-            "https://astro.click108.com.tw/daily.php?iAcDay=%s&iAstro=%s",
-            $executeDay,
-            $index
-        );
+        return sprintf(self::baseUrl, $executeDay, $index);
     }
 
     /**
