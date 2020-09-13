@@ -79,8 +79,11 @@
                 data = errorHandle.data;
 
             if (errorHandle.status == 422 && "errors" in data) {
-                alert(data.errors.account);
+                const keyAry = Object.keys(data.errors);
 
+                for (let i = 0; i < keyAry.length; i++) {
+                    alert(data.errors[keyAry[i]]);
+                }
                 return;
             }
 

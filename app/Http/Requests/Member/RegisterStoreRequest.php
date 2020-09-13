@@ -25,7 +25,8 @@ class RegisterStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'account' => 'required|unique:users'
+            'account' => 'required|unique:users',
+            'password' => 'required'
         ];
     }
 
@@ -37,7 +38,8 @@ class RegisterStoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'account' => '帳號'
+            'account' => '帳號',
+            'password' => '密碼'
         ];
     }
 
@@ -49,7 +51,7 @@ class RegisterStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ':attribute 不存在',
+            'required' => '請輸入 :attribute',
             'unique' => ':attribute 已存在'
         ];
     }
