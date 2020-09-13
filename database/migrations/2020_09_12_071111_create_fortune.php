@@ -16,7 +16,7 @@ class CreateFortune extends Migration
         Schema::create('fortune', function (Blueprint $table) {
             $table->unsignedInteger('id', 1)->comment('流水號');
             $table->string('astro', 3)->comment('星座');
-            $table->string('execute_day')->comment('執行日期');
+            $table->date('execute_day')->comment('執行日期');
             $table->string('fortune', 10)->comment('整體運勢');
             $table->string('fortune_comment')->comment('整體運勢說明');
             $table->string('love', 10)->comment('愛情運勢');
