@@ -19,6 +19,18 @@ class CrawlerService implements CrawlerInterFace
         '牡羊座', '金牛座', '雙子座', '巨蟹座', '獅子座', '處女座', '天秤座', '天蠍座', '射手座', '摩羯座', '水瓶座', '雙魚座'
     ];
 
+    /** @var array */
+    protected static $column = [
+        'fortune',
+        'fortune_comment',
+        'love',
+        'love_comment',
+        'cause',
+        'cause_comment',
+        'money',
+        'money_comment'
+    ];
+
     public function exec()
     {
         collect(self::$astro)->map(function ($item, $index) {
@@ -64,35 +76,9 @@ class CrawlerService implements CrawlerInterFace
      */
     protected function eachCallBack(Crawler $node, int $index): array
     {
-        $text = $node->text();
-        switch ($index) {
-            case 0:
-                $data = ['fortune' => $text];
-                break;
-            case 1:
-                $data = ['fortune_comment' => $text];
-                break;
-            case 2:
-                $data = ['love' => $text];
-                break;
-            case 3:
-                $data = ['love_comment' => $text];
-                break;
-            case 4:
-                $data = ['cause' => $text];
-                break;
-            case 5:
-                $data = ['cause_comment' => $text];
-                break;
-            case 6:
-                $data = ['money' => $text];
-                break;
-            case 7:
-                $data = ['money_comment' => $text];
-                break;
-        }
+        $column = Arr::only(self::$column, $index);
 
-        return $data;
+        return array_combine($column, [$node->text()]);
     }
 
     /**
