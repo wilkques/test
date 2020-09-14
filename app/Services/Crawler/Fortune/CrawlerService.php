@@ -76,7 +76,7 @@ class CrawlerService implements CrawlerInterFace
      */
     protected function eachCallBack(Crawler $node, int $index): array
     {
-        return array_fill_keys(Arr::only(self::$column, $index), $node->text());
+        return array_fill_keys([self::$column[$index]], $node->text());
     }
 
     /**
