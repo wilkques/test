@@ -5,10 +5,12 @@ namespace App\Service\Crawler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
 
-class CrawlerService
+abstract class CrawlerService
 {
-    /** @var static */
-    protected $service;
+    /** @var string */
+    protected $url;
+
+    abstract function exec();
 
     /**
      * set url
@@ -45,48 +47,5 @@ class CrawlerService
     public function getCrawler()
     {
         return new Crawler($this->getDom());
-    }
-
-    /**
-     * set Crawler Service
-     *
-     * @param static $service
-     * @return $this
-     */
-    public function setService($service)
-    {
-        $this->service = $service;
-
-        return $this;
-    }
-
-    /**
-     * get Crawler Service
-     *
-     * @return static
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * execute
-     *
-     * @return static
-     */
-    public function execute()
-    {
-        return $this->getService()->exec();
-    }
-
-    public function __call($method, $arguments)
-    {
-        return $this->getService()->$method(...$arguments);
-    }
-
-    public static function __callStatic($method, $arguments)
-    {
-        return (new static)->$method(...$arguments);
     }
 }

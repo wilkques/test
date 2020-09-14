@@ -38,6 +38,6 @@ class FortuneCommand extends Command
      */
     public function handle()
     {
-        CrawlerService::execute();
+        (new CrawlerService)->exec();
     }
 }

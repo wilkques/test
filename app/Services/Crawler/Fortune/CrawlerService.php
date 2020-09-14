@@ -3,13 +3,12 @@
 namespace App\Service\Crawler\Fortune;
 
 use App\Models\Fortune;
-use App\Service\Crawler\CrawlerInterFace;
 use App\Service\Crawler\CrawlerService as BaseCrawlerService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Symfony\Component\DomCrawler\Crawler;
 
-class CrawlerService implements CrawlerInterFace
+class CrawlerService extends BaseCrawlerService
 {
     /** @var string */
     const baseUrl = "https://astro.click108.com.tw/daily.php?iAcDay=%s&iAstro=%s";
@@ -77,25 +76,5 @@ class CrawlerService implements CrawlerInterFace
     protected function eachCallBack(Crawler $node, int $index): array
     {
         return array_fill_keys([self::$column[$index]], $node->text());
-    }
-
-    /**
-     * @param string $method
-     * @param array $arguments
-     * @return App\Service\Crawler\CrawlerService
-     */
-    public function baseCrawler($method, $arguments)
-    {
-        return (new BaseCrawlerService)->setService($this)->$method(...$arguments);
-    }
-
-    public function __call($method, $arguments)
-    {
-        return $this->baseCrawler($method, $arguments);
-    }
-
-    public static function __callStatic($method, $arguments)
-    {
-        return (new static)->$method(...$arguments);
     }
 }
